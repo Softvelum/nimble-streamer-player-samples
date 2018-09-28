@@ -7,6 +7,6 @@ Examples of player HTML code to be used while streaming with Nimble Streamer.
 - progressive-download-jwplayer.html - JW Player set up for [pseudo-streaming](https://wmspanel.com/nimble/progressive_download)
 - html5-player.html - playing videos with default HTML5 browser video tag.
 
-Read [VOD HLS streaming how-to](https://blog.wmspanel.com/2013/11/streaming-vod-digitalocean-nimble-streamer.html) for real-life usage example 
+Read [VOD HLS streaming how-to](https://blog.wmspanel.com/2013/11/streaming-vod-digitalocean-nimble-streamer.html) for real-life usage example.
 
 Nimble Streamer installation instructions and other details can be found at https://wmspanel.com/nimble
