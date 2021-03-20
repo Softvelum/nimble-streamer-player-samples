@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <script src="https://softvelum.com/player/releases/sldp-v2.17.5.min.js"></script>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+      }
+      #start {
+        width: 100%;
+        height: 90vh;
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 840px;
+      }
+      .start-btn {
+        margin: auto;
+        font-size: 1rem;
+        padding: 7px 12px;
+      }
+      .outer-wrp {
+        display: flex;
+        width: 400px;
+        margin: 0 1rem 1rem 0;
+      }
+      .player-wrp {
+        width: calc(100% - 60px);
+        height: 200px;
+      }
+      .vu-meter-wrp {
+        width: 60px;
+        height: 200px;
+      }
+    </style>
+  </head>
+ <body>
+  <div id='start'>
+    <button class='start-btn' onclick='startPlayers()'>Start players</button>
+  </div>
+  <div class='grid'>
+    <div class='outer-wrp'>
+      <div id="player-wrp-1" class='player-wrp'></div>
+      <div id="vu-meter-1" class='vu-meter-wrp'></div>
+    </div>
+    <div class='outer-wrp'>
+      <div id="player-wrp-2" class='player-wrp'></div>
+      <div id="vu-meter-2" class='vu-meter-wrp'></div>
+    </div>
+    <div class='outer-wrp'>
+      <div id="player-wrp-3" class='player-wrp'></div>
+      <div id="vu-meter-3" class='vu-meter-wrp'></div>
+    </div>
+    <div class='outer-wrp'>
+      <div id="player-wrp-4" class='player-wrp'></div>
+      <div id="vu-meter-4" class='vu-meter-wrp'></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var sldpPlayers = [];
+    var urls = [
+      'wss://vd1.wmspanel.com/video_demo_without_ads/stream',
+      'wss://vd1.wmspanel.com/video_demo/stream',
+      'wss://vd1.wmspanel.com/video_demo/stream',
+      'wss://vd1.wmspanel.com/video_demo_without_ads/stream'
+    ];
+
+    function startPlayers () {
+      var button = document.getElementById('start');
+      button.style.display = 'none';
+
+      if ( sldpPlayers.length > 0 ) {
+        restartPlayers();
+      } else {
+        doStart();
+      }
+    }
+
+    function restartPlayers () {
+      var destroyCnt = 0;
+      for (var i = 0; i < sldpPlayers.length; i++) {
+        sldpPlayers[i].destroy(function () {
+          destroyCnt++;
+          if (destroyCnt === sldpPlayers.length) {
+            sldpPlayers = [];
+            doStart();
+          }
+        });
+      }
+    }
+
+    function doStart () {
+      for (var i = 0; i < 4; i++) {
+        var player = SLDP.init({
+          container:          'player-wrp-' + (i + 1),
+          stream_url:         urls[i],
+          buffering:          800,
+          autoplay:           true,
+          muted:              true,
+          height:             200,
+          vu_meter:           {type: 'input', mode: 'peak', container: 'vu-meter-' + (i + 1), rate: 10},
+        });
+        sldpPlayers[i] = player;
+      }
+    }
+  </script>
+
+</body>
